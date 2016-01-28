@@ -1,0 +1,92 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Inline label</title>
+    <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".inline-label-wrapper").css("position", "");
+            $("xmp").text($(".codeExample").prop('innerHTML'));
+            $(".inline-label-wrapper").css("position", "relative");
+        });
+    </script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            font-size: 110%;
+        }
+        input {
+            display: block;
+            font-family: sans-serif;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
+            line-height: 18px;
+            padding: 15px 10px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #000;
+        }
+        .inline-label-wrapper {
+            /*position: relative; /*nastavuje JavaScript*/
+            margin: 18px 0;
+        }
+        .inline-label-wrapper label {
+            font-size: 16px;
+            line-height: 1.125;
+            position: absolute;
+            top: 16px;
+            left: 10px;
+            color: #ddd;
+            transition: all 200ms;
+        }
+        .inline-label-wrapper label.js-filled-input {
+            top: 5px;
+            font-size: 8px;
+            color: #000;
+        }
+        .xmp {
+            margin: 18px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inline label <small>(jako náhrada za placeholder)</small></h1>
+
+    <h2>Markup a JS obsluha</h2>
+    <xmp>
+    </xmp>
+
+    <h2>Ukázka</h2>
+    <div class="codeExample">
+    <div class="inline-label-wrapper">
+        <input type="text" id="someUniqueID">
+        <label for="someUniqueID" class="js-inline-label">Label text</label>
+    </div>
+
+    <script>
+        (function ($) {
+            "use-strict";
+
+            $(".js-inline-label").each(function(index, element){
+                var $label = $(element);
+                var $input = $("#" + $label.attr("for"));
+                $label.parent().css("position", "relative");
+                $input.on("focus.inlinelabel", function(event) {
+                    $label.addClass("js-filled-input");
+                });
+                $input.on("blur.inlinelabel", function(event) {
+                    if ($input.val().length == 0) {
+                        $label.removeClass("js-filled-input");
+                    }
+                });
+            });
+        })(jQuery);
+    </script>
+    </div>
+</body>
+</html>
